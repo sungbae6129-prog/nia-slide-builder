@@ -1,0 +1,8 @@
+interface:
+  display_name: "NIA Slide Builder"
+  short_description: "NIA-branded HTML, PDF, and editable PPTX decks"
+  brand_color: "#1474BD"
+  default_prompt: "Use $nia-slide-builder to create a polished NIA-branded slide deck with the mandatory cover and thank-you closing slide."
+
+policy:
+  allow_implicit_invocation: true

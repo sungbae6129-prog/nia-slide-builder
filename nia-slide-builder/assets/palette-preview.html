@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HTML Slide Builder Palette Preview</title>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: #E7EAEE;
+    color: #111827;
+    font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  main {
+    width: min(1200px, calc(100% - 48px));
+    margin: 0 auto;
+    padding: 48px 0;
+  }
+  .hero {
+    display: flex;
+    justify-content: space-between;
+    gap: 32px;
+    align-items: end;
+    margin-bottom: 28px;
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: #FFFFFF;
+    color: #2563EB;
+    font-size: 13px;
+    font-weight: 850;
+    box-shadow: 0 6px 18px rgba(17, 24, 39, 0.06);
+  }
+  .eyebrow::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    background: #2563EB;
+    border-radius: 50%;
+  }
+  h1 {
+    margin: 18px 0 0;
+    font-size: 44px;
+    line-height: 1.14;
+    letter-spacing: 0;
+  }
+  .intro {
+    max-width: 470px;
+    color: #4B5563;
+    font-size: 16px;
+    line-height: 1.6;
+    font-weight: 560;
+  }
+  .palette-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+  }
+  .palette {
+    --primary: #3182F6;
+    --primary-deep: #1B64DA;
+    --primary-soft: #E8F3FF;
+    --primary-bg: #F2F8FF;
+    --text: #191F28;
+    --muted: #4E5968;
+    --subtle: #8B95A1;
+    --line: #D1D6DB;
+    --line-soft: #F2F4F6;
+    --surface: #FFFFFF;
+    --surface-muted: #F9FAFB;
+    --page-bg: #E5E8EB;
+    --success: #00C896;
+    --warning: #FF7E36;
+    --violet: #8B5CF6;
+    background: var(--surface);
+    border-radius: 24px;
+    padding: 24px;
+    border: 1px solid rgba(17, 24, 39, 0.06);
+    box-shadow: 0 12px 36px rgba(17, 24, 39, 0.08);
+  }
+  .palette.graphite {
+    --primary: #2563EB;
+    --primary-deep: #1E3A8A;
+    --primary-soft: #EAF1FF;
+    --primary-bg: #F5F7FB;
+    --text: #111827;
+    --muted: #4B5563;
+    --subtle: #9CA3AF;
+    --line: #D1D5DB;
+    --line-soft: #EEF0F4;
+    --surface: #FFFFFF;
+    --surface-muted: #F7F8FA;
+    --page-bg: #E7EAEE;
+    --success: #059669;
+    --warning: #D97706;
+    --violet: #6D5BD0;
+  }
+  .palette.green {
+    --primary: #10B981;
+    --primary-deep: #047857;
+    --primary-soft: #DFF8EE;
+    --primary-bg: #F1FBF6;
+    --text: #14201B;
+    --muted: #476158;
+    --subtle: #8AA09A;
+    --line: #CFE1DA;
+    --line-soft: #EAF2EF;
+    --surface: #FFFFFF;
+    --surface-muted: #F7FAF8;
+    --page-bg: #E6EEE9;
+    --success: #16A34A;
+    --warning: #F97316;
+    --violet: #6366F1;
+  }
+  .palette.warm {
+    --primary: #F9735B;
+    --primary-deep: #C2412D;
+    --primary-soft: #FFE8E1;
+    --primary-bg: #FFF6F2;
+    --text: #2A1F1B;
+    --muted: #6B5550;
+    --subtle: #A99690;
+    --line: #E7D7D0;
+    --line-soft: #F5ECE8;
+    --surface: #FFFFFF;
+    --surface-muted: #FFFAF7;
+    --page-bg: #EFE6E1;
+    --success: #2F9E75;
+    --warning: #E99A2C;
+    --violet: #9B6DFF;
+  }
+  .palette-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+    align-items: start;
+    margin-bottom: 18px;
+  }
+  .palette-label {
+    color: var(--primary);
+    font-size: 13px;
+    font-weight: 900;
+    letter-spacing: 0.04em;
+  }
+  h2 {
+    margin: 8px 0 0;
+    color: var(--text);
+    font-size: 28px;
+    line-height: 1.16;
+    letter-spacing: 0;
+  }
+  .use-case {
+    max-width: 250px;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.5;
+    font-weight: 620;
+    text-align: right;
+  }
+  .swatches {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+  .swatch {
+    min-height: 86px;
+    border-radius: 12px;
+    border: 1px solid rgba(17, 24, 39, 0.08);
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    color: var(--text);
+    overflow: hidden;
+  }
+  .swatch.dark {
+    color: #FFFFFF;
+  }
+  .swatch-name {
+    font-size: 12px;
+    font-weight: 900;
+    line-height: 1.1;
+  }
+  .swatch-use {
+    margin-top: 5px;
+    font-size: 10px;
+    font-weight: 800;
+    line-height: 1.3;
+    opacity: 0.72;
+  }
+  .sample {
+    border-radius: 20px;
+    background: linear-gradient(160deg, var(--primary-bg) 0%, var(--primary-soft) 100%);
+    padding: 20px;
+    min-height: 230px;
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 16px;
+  }
+  .sample-copy {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  .tag {
+    width: fit-content;
+    border-radius: 999px;
+    padding: 7px 12px;
+    background: var(--surface);
+    color: var(--primary);
+    font-size: 12px;
+    font-weight: 900;
+  }
+  .sample-title {
+    margin-top: 18px;
+    color: var(--text);
+    font-size: 26px;
+    line-height: 1.18;
+    font-weight: 900;
+    letter-spacing: 0;
+  }
+  .sample-title span { color: var(--primary); }
+  .sample-body {
+    margin-top: 10px;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.55;
+    font-weight: 620;
+  }
+  .metric-card {
+    border-radius: 18px;
+    padding: 20px;
+    color: white;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-deep) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 14px 28px color-mix(in srgb, var(--primary) 28%, transparent);
+  }
+  .metric-label {
+    font-size: 12px;
+    font-weight: 900;
+    opacity: 0.84;
+  }
+  .metric {
+    font-size: 38px;
+    font-weight: 950;
+    letter-spacing: 0;
+  }
+  .caption {
+    color: rgba(255, 255, 255, 0.86);
+    font-size: 13px;
+    line-height: 1.45;
+    font-weight: 650;
+  }
+  .tokens {
+    margin-top: 16px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .token {
+    border-radius: 12px;
+    background: var(--surface-muted);
+    border: 1px solid var(--line-soft);
+    padding: 10px;
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 800;
+  }
+  .token strong {
+    display: block;
+    margin-top: 4px;
+    color: var(--text);
+    font-size: 12px;
+  }
+  @media (max-width: 980px) {
+    .hero,
+    .palette-grid,
+    .sample {
+      grid-template-columns: 1fr;
+      display: grid;
+    }
+    .use-case { text-align: left; max-width: none; }
+  }
+  @media (max-width: 640px) {
+    main { width: min(100% - 28px, 1200px); padding: 28px 0; }
+    h1 { font-size: 34px; }
+    .swatches { grid-template-columns: repeat(2, 1fr); }
+    .tokens { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <section class="hero">
+    <div>
+      <div class="eyebrow">HTML Slide Builder · Palette Preview</div>
+      <h1>슬라이드 제작 전에<br>네 가지 팔레트를 비교합니다.</h1>
+    </div>
+    <p class="intro">각 팔레트는 같은 CSS 토큰 구조를 사용합니다. 원하는 번호를 고르면 이후 HTML 슬라이드에 그대로 적용할 수 있습니다.</p>
+  </section>
+
+  <section class="palette-grid">
+    <article class="palette blue">
+      <div class="palette-head">
+        <div>
+          <div class="palette-label">PALETTE 01</div>
+          <h2>Trust Blue</h2>
+        </div>
+        <div class="use-case">회사 발표, AI 교육, SaaS 제품, 업무 자동화</div>
+      </div>
+      <div class="swatches">
+        <div class="swatch dark" style="background:var(--primary)"><div class="swatch-name">Primary</div><div class="swatch-use">강조, 태그, 핵심 단어</div></div>
+        <div class="swatch dark" style="background:var(--primary-deep)"><div class="swatch-name">Deep</div><div class="swatch-use">선택 카드, 진한 그라디언트</div></div>
+        <div class="swatch" style="background:var(--primary-soft)"><div class="swatch-name">Soft</div><div class="swatch-use">연한 배경, 보조 정보</div></div>
+        <div class="swatch dark" style="background:var(--text)"><div class="swatch-name">Text</div><div class="swatch-use">제목, 본문 핵심 텍스트</div></div>
+        <div class="swatch dark" style="background:var(--success)"><div class="swatch-name">Success</div><div class="swatch-use">성과, 완료, 긍정 신호</div></div>
+        <div class="swatch dark" style="background:var(--warning)"><div class="swatch-name">Warning</div><div class="swatch-use">주의, 변화, 리스크</div></div>
+      </div>
+      <div class="sample">
+        <div class="sample-copy">
+          <div class="tag">Clean SaaS</div>
+          <div class="sample-title">기술 자료를<br><span>명확하게</span> 보이게</div>
+          <div class="sample-body">흰 배경, 밝은 블루 강조, 부드러운 정보 카드에 적합합니다.</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">DEFAULT</div>
+          <div>
+            <div class="metric">01</div>
+            <div class="caption">가장 안정적인 기본 회사 발표 톤입니다.</div>
+          </div>
+        </div>
+      </div>
+      <div class="tokens">
+        <div class="token">Primary<strong>#3182F6</strong></div>
+        <div class="token">Deep<strong>#1B64DA</strong></div>
+        <div class="token">Soft<strong>#E8F3FF</strong></div>
+      </div>
+    </article>
+
+    <article class="palette graphite">
+      <div class="palette-head">
+        <div>
+          <div class="palette-label">PALETTE 02</div>
+          <h2>Graphite Focus</h2>
+        </div>
+        <div class="use-case">임원 보고, 전략, KPI, 의사결정 자료</div>
+      </div>
+      <div class="swatches">
+        <div class="swatch dark" style="background:var(--primary)"><div class="swatch-name">Primary</div><div class="swatch-use">강조, 태그, 핵심 단어</div></div>
+        <div class="swatch dark" style="background:var(--primary-deep)"><div class="swatch-name">Deep</div><div class="swatch-use">선택 카드, 진한 그라디언트</div></div>
+        <div class="swatch" style="background:var(--primary-soft)"><div class="swatch-name">Soft</div><div class="swatch-use">연한 배경, 보조 정보</div></div>
+        <div class="swatch dark" style="background:var(--text)"><div class="swatch-name">Text</div><div class="swatch-use">제목, 본문 핵심 텍스트</div></div>
+        <div class="swatch dark" style="background:var(--success)"><div class="swatch-name">Success</div><div class="swatch-use">성과, 완료, 긍정 신호</div></div>
+        <div class="swatch dark" style="background:var(--warning)"><div class="swatch-name">Warning</div><div class="swatch-use">주의, 변화, 리스크</div></div>
+      </div>
+      <div class="sample">
+        <div class="sample-copy">
+          <div class="tag">Executive Brief</div>
+          <div class="sample-title">결정에 필요한<br><span>핵심 지표</span> 중심</div>
+          <div class="sample-body">중립적인 표면과 절제된 블루로 분석적인 분위기를 만듭니다.</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">FOCUS</div>
+          <div>
+            <div class="metric">02</div>
+            <div class="caption">보고서와 전략 문서에 가장 차분합니다.</div>
+          </div>
+        </div>
+      </div>
+      <div class="tokens">
+        <div class="token">Primary<strong>#2563EB</strong></div>
+        <div class="token">Deep<strong>#1E3A8A</strong></div>
+        <div class="token">Soft<strong>#EAF1FF</strong></div>
+      </div>
+    </article>
+
+    <article class="palette green">
+      <div class="palette-head">
+        <div>
+          <div class="palette-label">PALETTE 03</div>
+          <h2>Signal Green</h2>
+        </div>
+        <div class="use-case">운영, 성장, 성과, 도입률, 개선 프로젝트</div>
+      </div>
+      <div class="swatches">
+        <div class="swatch dark" style="background:var(--primary)"><div class="swatch-name">Primary</div><div class="swatch-use">강조, 태그, 핵심 단어</div></div>
+        <div class="swatch dark" style="background:var(--primary-deep)"><div class="swatch-name">Deep</div><div class="swatch-use">선택 카드, 진한 그라디언트</div></div>
+        <div class="swatch" style="background:var(--primary-soft)"><div class="swatch-name">Soft</div><div class="swatch-use">연한 배경, 보조 정보</div></div>
+        <div class="swatch dark" style="background:var(--text)"><div class="swatch-name">Text</div><div class="swatch-use">제목, 본문 핵심 텍스트</div></div>
+        <div class="swatch dark" style="background:var(--success)"><div class="swatch-name">Success</div><div class="swatch-use">성과, 완료, 긍정 신호</div></div>
+        <div class="swatch dark" style="background:var(--warning)"><div class="swatch-name">Warning</div><div class="swatch-use">주의, 변화, 리스크</div></div>
+      </div>
+      <div class="sample">
+        <div class="sample-copy">
+          <div class="tag">Operations</div>
+          <div class="sample-title">개선 흐름과<br><span>성장 신호</span>를 강조</div>
+          <div class="sample-body">운영 지표, 프로세스 개선, 긍정적 변화 메시지에 잘 맞습니다.</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">GROWTH</div>
+          <div>
+            <div class="metric">03</div>
+            <div class="caption">성과와 건강한 시스템의 느낌을 줍니다.</div>
+          </div>
+        </div>
+      </div>
+      <div class="tokens">
+        <div class="token">Primary<strong>#10B981</strong></div>
+        <div class="token">Deep<strong>#047857</strong></div>
+        <div class="token">Soft<strong>#DFF8EE</strong></div>
+      </div>
+    </article>
+
+    <article class="palette warm">
+      <div class="palette-head">
+        <div>
+          <div class="palette-label">PALETTE 04</div>
+          <h2>Warm Editorial</h2>
+        </div>
+        <div class="use-case">브랜드 스토리, 고객 사례, 문화, 회고형 발표</div>
+      </div>
+      <div class="swatches">
+        <div class="swatch dark" style="background:var(--primary)"><div class="swatch-name">Primary</div><div class="swatch-use">강조, 태그, 핵심 단어</div></div>
+        <div class="swatch dark" style="background:var(--primary-deep)"><div class="swatch-name">Deep</div><div class="swatch-use">선택 카드, 진한 그라디언트</div></div>
+        <div class="swatch" style="background:var(--primary-soft)"><div class="swatch-name">Soft</div><div class="swatch-use">연한 배경, 보조 정보</div></div>
+        <div class="swatch dark" style="background:var(--text)"><div class="swatch-name">Text</div><div class="swatch-use">제목, 본문 핵심 텍스트</div></div>
+        <div class="swatch dark" style="background:var(--success)"><div class="swatch-name">Success</div><div class="swatch-use">성과, 완료, 긍정 신호</div></div>
+        <div class="swatch dark" style="background:var(--warning)"><div class="swatch-name">Warning</div><div class="swatch-use">주의, 변화, 리스크</div></div>
+      </div>
+      <div class="sample">
+        <div class="sample-copy">
+          <div class="tag">Storytelling</div>
+          <div class="sample-title">사람과 맥락이<br><span>먼저 보이는</span> 자료</div>
+          <div class="sample-body">딱딱한 보고보다 내러티브와 감정선이 필요한 발표에 어울립니다.</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">NARRATIVE</div>
+          <div>
+            <div class="metric">04</div>
+            <div class="caption">따뜻하고 편안한 편집물 같은 인상을 만듭니다.</div>
+          </div>
+        </div>
+      </div>
+      <div class="tokens">
+        <div class="token">Primary<strong>#F9735B</strong></div>
+        <div class="token">Deep<strong>#C2412D</strong></div>
+        <div class="token">Soft<strong>#FFE8E1</strong></div>
+      </div>
+    </article>
+  </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HTML Slide</title>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --color-primary: #3182F6;
+    --color-primary-deep: #1B64DA;
+    --color-primary-soft: #E8F3FF;
+    --color-primary-bg: #F2F8FF;
+    --color-text: #191F28;
+    --color-text-muted: #4E5968;
+    --color-text-subtle: #8B95A1;
+    --color-line: #D1D6DB;
+    --color-line-soft: #F2F4F6;
+    --color-surface: #FFFFFF;
+    --color-surface-muted: #F9FAFB;
+    --color-page-bg: #E5E8EB;
+    --color-success: #00C896;
+    --color-warning: #FF7E36;
+    --color-violet: #8B5CF6;
+  }
+  html,
+  body {
+    font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--color-page-bg);
+    color: var(--color-text);
+    -webkit-font-smoothing: antialiased;
+  }
+  h1,
+  h2,
+  h3,
+  p,
+  li,
+  .card-text,
+  .insight {
+    word-break: keep-all;
+    overflow-wrap: break-word;
+  }
+  .keep-phrase {
+    white-space: nowrap;
+  }
+  .deck {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 48px 24px;
+  }
+  .slide {
+    width: 1280px;
+    max-width: 100%;
+    height: 720px;
+    background: var(--color-surface);
+    border-radius: 24px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+    padding: 72px 80px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .brand {
+    position: absolute;
+    top: 32px;
+    right: 48px;
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--color-line);
+    letter-spacing: 0.1em;
+  }
+  .slide-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: var(--color-primary-soft);
+    color: var(--color-primary);
+    font-size: 14px;
+    font-weight: 700;
+    border-radius: 999px;
+    width: fit-content;
+  }
+  .slide-tag::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    background: var(--color-primary);
+    border-radius: 50%;
+  }
+  h1 {
+    margin-top: 24px;
+    font-size: 60px;
+    font-weight: 800;
+    line-height: 1.15;
+  }
+  .accent { color: var(--color-primary); }
+  .lead {
+    margin-top: 20px;
+    font-size: 22px;
+    color: var(--color-text-muted);
+    font-weight: 500;
+    line-height: 1.5;
+  }
+  .cards {
+    margin-top: auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .card {
+    background: var(--color-surface-muted);
+    border: 1px solid var(--color-line-soft);
+    border-radius: 20px;
+    padding: 28px 32px;
+  }
+  .card.primary {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-deep) 100%);
+    color: white;
+    border: none;
+  }
+  .card-label {
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--color-primary);
+    margin-bottom: 12px;
+  }
+  .card.primary .card-label { color: rgba(255, 255, 255, 0.85); }
+  .card-text {
+    font-size: 18px;
+    font-weight: 650;
+    line-height: 1.5;
+  }
+  .slide-num {
+    position: absolute;
+    bottom: 32px;
+    right: 48px;
+    font-size: 13px;
+    color: var(--color-text-subtle);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+  .slide-num span { color: var(--color-primary); }
+</style>
+</head>
+<body>
+  <div class="deck">
+    <section class="slide">
+      <div class="brand">BRAND · DECK</div>
+      <div class="slide-tag">Section</div>
+      <h1>슬라이드의 핵심 문장을<br><span class="accent">강조합니다.</span></h1>
+      <p class="lead">보조 문장은 짧고 명확하게 유지합니다.</p>
+      <div class="cards">
+        <div class="card">
+          <div class="card-label">CONTEXT</div>
+          <div class="card-text">배경이나 문제를 설명합니다.</div>
+        </div>
+        <div class="card primary">
+          <div class="card-label">TAKEAWAY</div>
+          <div class="card-text">청중이 기억해야 할 결론을 둡니다.</div>
+        </div>
+      </div>
+      <div class="slide-num"><span>01</span> / 01</div>
+    </section>
+  </div>
+</body>
+</html>

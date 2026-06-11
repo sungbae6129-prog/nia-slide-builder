@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HTML Slide Builder Design Preview</title>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  * { box-sizing: border-box; }
+  :root {
+    --primary: #3182F6;
+    --primary-deep: #1B64DA;
+    --primary-soft: #E8F3FF;
+    --primary-bg: #F2F8FF;
+    --text: #191F28;
+    --muted: #4E5968;
+    --subtle: #8B95A1;
+    --line: #D1D6DB;
+    --line-soft: #F2F4F6;
+    --surface: #FFFFFF;
+    --surface-muted: #F9FAFB;
+    --page-bg: #E5E8EB;
+    --success: #00C896;
+    --warning: #FF7E36;
+    --violet: #8B5CF6;
+  }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--page-bg);
+    color: var(--text);
+    font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  main {
+    width: min(1220px, calc(100% - 48px));
+    margin: 0 auto;
+    padding: 48px 0;
+  }
+  .hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 32px;
+    margin-bottom: 28px;
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: var(--primary-soft);
+    color: var(--primary);
+    font-size: 13px;
+    font-weight: 850;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    background: var(--primary);
+    border-radius: 50%;
+  }
+  h1 {
+    margin: 18px 0 0;
+    font-size: 44px;
+    line-height: 1.14;
+    letter-spacing: 0;
+  }
+  .intro {
+    max-width: 470px;
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 1.6;
+    font-weight: 560;
+  }
+  .design-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .design {
+    background: var(--surface);
+    border-radius: 24px;
+    padding: 24px;
+    box-shadow: 0 12px 36px rgba(25, 31, 40, 0.08);
+    border: 1px solid rgba(25, 31, 40, 0.06);
+    display: grid;
+    grid-template-columns: 0.48fr 1fr;
+    gap: 24px;
+  }
+  .design-info {
+    display: flex;
+    flex-direction: column;
+  }
+  .design-label {
+    color: var(--primary);
+    font-size: 13px;
+    font-weight: 900;
+    letter-spacing: 0.04em;
+  }
+  h2 {
+    margin: 8px 0 0;
+    font-size: 30px;
+    line-height: 1.15;
+    letter-spacing: 0;
+  }
+  .desc {
+    margin-top: 14px;
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.58;
+    font-weight: 600;
+  }
+  .best {
+    margin-top: auto;
+    display: grid;
+    gap: 8px;
+  }
+  .best span {
+    width: fit-content;
+    border-radius: 999px;
+    padding: 7px 11px;
+    background: var(--surface-muted);
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 850;
+  }
+  .canvas {
+    aspect-ratio: 16 / 9;
+    background: var(--page-bg);
+    border-radius: 18px;
+    padding: 18px;
+    min-width: 0;
+  }
+  .slide {
+    width: 100%;
+    height: 100%;
+    background: var(--surface);
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 10px 26px rgba(25, 31, 40, 0.10);
+  }
+  .brand {
+    position: absolute;
+    top: 18px;
+    right: 22px;
+    color: var(--line);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+  }
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    width: fit-content;
+    border-radius: 999px;
+    padding: 6px 11px;
+    background: var(--primary-soft);
+    color: var(--primary);
+    font-size: 10px;
+    font-weight: 900;
+  }
+  .tag::before {
+    content: "";
+    width: 5px;
+    height: 5px;
+    background: var(--primary);
+    border-radius: 50%;
+  }
+  .clean {
+    padding: 48px 54px;
+  }
+  .clean h3 {
+    margin: 18px 0 0;
+    max-width: 520px;
+    font-size: 42px;
+    line-height: 1.12;
+    letter-spacing: 0;
+  }
+  .clean h3 span { color: var(--primary); }
+  .clean p {
+    margin: 14px 0 0;
+    max-width: 460px;
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.5;
+    font-weight: 600;
+  }
+  .clean-cards {
+    position: absolute;
+    left: 54px;
+    right: 54px;
+    bottom: 42px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .clean-card {
+    border-radius: 14px;
+    padding: 18px;
+    background: var(--surface-muted);
+    border: 1px solid var(--line-soft);
+    font-size: 13px;
+    font-weight: 800;
+    line-height: 1.45;
+  }
+  .clean-card.primary {
+    color: white;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-deep) 100%);
+    border: 0;
+  }
+  .brief {
+    padding: 36px 42px;
+  }
+  .brief h3 {
+    margin: 14px 0 0;
+    font-size: 31px;
+    line-height: 1.18;
+  }
+  .metric-row {
+    margin-top: 24px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .metric {
+    border-radius: 12px;
+    padding: 14px;
+    background: var(--surface-muted);
+    border: 1px solid var(--line-soft);
+  }
+  .metric .k {
+    color: var(--subtle);
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: 0.06em;
+  }
+  .metric .v {
+    margin-top: 9px;
+    color: var(--text);
+    font-size: 24px;
+    font-weight: 950;
+  }
+  .metric .v.blue { color: var(--primary); }
+  .brief-table {
+    margin-top: 16px;
+    border-top: 1px solid var(--line);
+  }
+  .row {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr 0.8fr;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--line-soft);
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 750;
+  }
+  .row strong { color: var(--text); }
+  .workshop {
+    padding: 38px 44px;
+    background: linear-gradient(160deg, var(--primary-bg) 0%, var(--surface) 58%);
+  }
+  .workshop h3 {
+    margin: 16px 0 0;
+    max-width: 500px;
+    font-size: 34px;
+    line-height: 1.15;
+  }
+  .steps {
+    margin-top: 24px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .step {
+    min-height: 136px;
+    border-radius: 16px;
+    padding: 16px;
+    background: var(--surface);
+    border: 1px solid var(--line-soft);
+    display: flex;
+    flex-direction: column;
+  }
+  .step-num {
+    color: var(--primary);
+    font-size: 11px;
+    font-weight: 950;
+    letter-spacing: 0.06em;
+  }
+  .step-title {
+    margin-top: 20px;
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.3;
+    font-weight: 900;
+  }
+  .step-note {
+    margin-top: auto;
+    color: var(--muted);
+    font-size: 10px;
+    line-height: 1.4;
+    font-weight: 650;
+  }
+  @media (max-width: 960px) {
+    .hero,
+    .design {
+      grid-template-columns: 1fr;
+      display: grid;
+    }
+    .best { margin-top: 18px; }
+  }
+  @media (max-width: 680px) {
+    main { width: min(100% - 28px, 1220px); padding: 28px 0; }
+    h1 { font-size: 34px; }
+    .canvas { padding: 10px; }
+    .clean, .brief, .workshop { padding: 24px; }
+    .clean h3 { font-size: 28px; }
+    .clean-cards, .metric-row, .steps {
+      position: static;
+      margin-top: 20px;
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+</head>
+<body>
+<main>
+  <section class="hero">
+    <div>
+      <div class="eyebrow">HTML Slide Builder · Design Preview</div>
+      <h1>같은 팔레트로<br>세 가지 디자인을 비교합니다.</h1>
+    </div>
+    <p class="intro">디자인 프리셋은 색이 아니라 정보 배치, 밀도, 발표 상황을 정합니다. 팔레트는 유지한 채 목적에 맞는 화면 구조를 고를 수 있습니다.</p>
+  </section>
+
+  <section class="design-grid">
+    <article class="design">
+      <div class="design-info">
+        <div class="design-label">DESIGN 01</div>
+        <h2>Clean SaaS</h2>
+        <p class="desc">큰 제목, 블루 강조, 부드러운 카드로 구성하는 기본 회사 발표 스타일입니다. 가장 범용적이고 첫 버전 기본값으로 쓰기 좋습니다.</p>
+        <div class="best">
+          <span>회사 발표</span>
+          <span>AI 업무 자료</span>
+          <span>제품/서비스 소개</span>
+        </div>
+      </div>
+      <div class="canvas">
+        <div class="slide clean">
+          <div class="brand">CLEAN SAAS</div>
+          <div class="tag">Overview</div>
+          <h3>AI와 일하는 방식을<br><span>팀의 기본값</span>으로 만듭니다.</h3>
+          <p>핵심 메시지를 먼저 보여주고, 아래 카드에서 비교와 결론을 짧게 정리합니다.</p>
+          <div class="clean-cards">
+            <div class="clean-card">기존 방식은 AI를 필요할 때만 꺼내 쓰는 보조 도구였습니다.</div>
+            <div class="clean-card primary">새 방식은 AI를 문제 해결 과정의 기본 레이어로 둡니다.</div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="design">
+      <div class="design-info">
+        <div class="design-label">DESIGN 02</div>
+        <h2>Executive Brief</h2>
+        <p class="desc">제목 크기를 줄이고, 숫자와 표를 중심으로 판단에 필요한 정보를 빠르게 스캔하게 만드는 보고형 스타일입니다.</p>
+        <div class="best">
+          <span>임원 보고</span>
+          <span>전략/KPI</span>
+          <span>의사결정 자료</span>
+        </div>
+      </div>
+      <div class="canvas">
+        <div class="slide brief">
+          <div class="brand">EXECUTIVE BRIEF</div>
+          <div class="tag">Quarterly Signal</div>
+          <h3>도입률은 상승했지만<br>반복 사용률 관리가 필요합니다.</h3>
+          <div class="metric-row">
+            <div class="metric"><div class="k">ADOPTION</div><div class="v blue">68%</div></div>
+            <div class="metric"><div class="k">WEEKLY USE</div><div class="v">42%</div></div>
+            <div class="metric"><div class="k">SAVED TIME</div><div class="v">11h</div></div>
+          </div>
+          <div class="brief-table">
+            <div class="row"><strong>영업</strong><span>활용 높음</span><span>확대</span></div>
+            <div class="row"><strong>운영</strong><span>효율 확인</span><span>유지</span></div>
+            <div class="row"><strong>지원</strong><span>편차 큼</span><span>개선</span></div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="design">
+      <div class="design-info">
+        <div class="design-label">DESIGN 03</div>
+        <h2>Workshop Playbook</h2>
+        <p class="desc">단계, 실습, 체크리스트가 잘 보이도록 만드는 교육형 스타일입니다. 청중이 따라 하며 배우는 자료에 잘 맞습니다.</p>
+        <div class="best">
+          <span>강의/교육</span>
+          <span>워크숍</span>
+          <span>실습 자료</span>
+        </div>
+      </div>
+      <div class="canvas">
+        <div class="slide workshop">
+          <div class="brand">WORKSHOP PLAYBOOK</div>
+          <div class="tag">Hands-on</div>
+          <h3>좋은 프롬프트는<br>작은 실험에서 시작합니다.</h3>
+          <div class="steps">
+            <div class="step">
+              <div class="step-num">STEP 01</div>
+              <div class="step-title">상황을<br>정의하기</div>
+              <div class="step-note">목표, 제약, 대상자를 적습니다.</div>
+            </div>
+            <div class="step">
+              <div class="step-num">STEP 02</div>
+              <div class="step-title">초안을<br>요청하기</div>
+              <div class="step-note">완성보다 방향 확인에 둡니다.</div>
+            </div>
+            <div class="step">
+              <div class="step-num">STEP 03</div>
+              <div class="step-title">검토하며<br>개선하기</div>
+              <div class="step-note">기준을 주고 다시 다듬습니다.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+  </section>
+</main>
+</body>
+</html>
